@@ -1,3 +1,5 @@
+// src/App.jsx
+import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./components/Home";
@@ -8,13 +10,15 @@ import Team from "./components/Team";
 import Footer from "./components/Footer";
 
 const App = () => {
+  const [explodeAnimation, setExplodeAnimation] = useState(false);
+
   return (
     <>
       <div className="pt-[4.75rem] lg:pt-[5.25rem] overflow-hidden">
         <Header />
         <Home />
-        <About />
-        <Events />
+        <About setExplodeAnimation={setExplodeAnimation} />
+        <Events explodeAnimation={explodeAnimation} />
         <Schedule />
         <Team />
         <Footer />
