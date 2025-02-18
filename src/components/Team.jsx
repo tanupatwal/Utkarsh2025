@@ -13,10 +13,30 @@ const teamMembers = [
     image: "/assets/team/gs.png",
   },
   {
-    name: "Madhav Maheshwari",
-    post: "TCC President",
-    image: "/assets/team/madhav.jpg",
+    name: "Pranava Hegde",
+    post: "AGS",
+    image: "/assets/team/gs1.jpg",
   },
+  {
+    name: "Tanishq Kashla",
+    post: "AGS",
+    image: "/assets/team/gs2.jpg",
+  },
+  {
+    name: "Revanta Biswas",
+    post: "AGS",
+    image: "/assets/team/gs3.jpg",
+  },
+  {
+    name: "Dhanraj Sardana",
+    post: "AGS",
+    image: "/assets/team/audi1.jpg",
+  },
+  // {
+  //   name: "Madhav Maheshwari",
+  //   post: "TCC President",
+  //   image: "/assets/team/madhav.jpg",
+  // },
   {
     name: "Ankit Bhardwaj",
     post: "AGS Web Designing",
@@ -52,11 +72,7 @@ const teamMembers = [
     post: "AGS Media",
     image: "/assets/team/media2.png",
   },
-  {
-    name: "Dhanraj Sardana",
-    post: "AGS Auditorium",
-    image: "/assets/team/audi1.jpg",
-  },
+ 
   {
     name: "Krishna Mishra",
     post: "AGS Auditorium",
@@ -162,21 +178,7 @@ const teamMembers = [
     post: "AGS Badminton Court",
     image: "/assets/team/court.png",
   },
-  {
-    name: "Pranava Hegde",
-    post: "General Secretary",
-    image: "/assets/team/gs1.jpg",
-  },
-  {
-    name: "Tanishq Kashla",
-    post: "General Secretary",
-    image: "/assets/team/gs2.jpg",
-  },
-  {
-    name: "Revanta Biswas",
-    post: "General Secretary",
-    image: "/assets/team/gs3.jpg",
-  },
+ 
 ];
 // src/components/Team.jsx
 const TeamMemberCard = ({ member, index, totalMembers }) => {
