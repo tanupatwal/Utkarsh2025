@@ -1,8 +1,9 @@
+// src/components/Team.jsx
+
 import { useEffect, useState, useRef } from "react";
-import { motion, useAnimation, useInView } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Countdown from "./design/Countdown";
-
 import "swiper/css";
 
 const teamMembers = [
@@ -177,9 +178,85 @@ const teamMembers = [
     image: "/assets/team/gs3.jpg",
   },
 ];
+// src/components/Team.jsx
+const TeamMemberCard = ({ member, index, totalMembers }) => {
+  const cardRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start end", "end start"]
+  });
+
+  // Calculate staggered delay based on column position
+  const columnCount = window.innerWidth >= 1024 ? 6 : window.innerWidth >= 768 ? 4 : 2;
+  const row = Math.floor(index / columnCount);
+  const col = index % columnCount;
+  const staggerDelay = (row * 0.1) + (col * 0.05);
+
+  const y = useTransform(
+    scrollYProgress,
+    [0, 0.3, 1],
+    [100, 0, 0]
+  );
+
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.3, 1],
+    [0, 1, 1]
+  );
+
+  const springConfig = { 
+    stiffness: 70,
+    damping: 15,
+    mass: 0.2
+  };
+
+  const springY = useSpring(y, springConfig);
+  const springOpacity = useSpring(opacity, springConfig);
+
+  return (
+    <motion.div
+      ref={cardRef}
+      style={{
+        opacity: springOpacity,
+        y: springY
+      }}
+      initial={{ opacity: 0, y: 50 }}
+      whileHover={{ scale: 1.05 }}
+      transition={{
+        scale: {
+          type: "spring",
+          stiffness: 300,
+          damping: 15
+        }
+      }}
+      className="flex flex-col items-center group"
+    >
+      <motion.div 
+        className="relative w-32 h-32 mb-4 overflow-hidden rounded-full border-2 border-purple-500/30 transition-all duration-300 group-hover:border-purple-500"
+        whileHover={{ scale: 1.1 }}
+        transition={{ duration: 0.3 }}
+      >
+        <img
+          src={member.image}
+          alt={member.name}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+      </motion.div>
+      
+      <h3 className="text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-purple-400 text-center">
+        {member.name}
+      </h3>
+      
+      <p className="mt-2 text-sm text-gray-400 font-medium text-center">
+        {member.post}
+      </p>
+    </motion.div>
+  );
+};
 
 const Team = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const containerRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -188,92 +265,55 @@ const Team = () => {
   }, []);
 
   return (
-    <div>
-      <section className="text-white pt-1 pb-8 px-5" id="team">
+    <div className="bg-gradient-to-b from-[#1a1a2e] to-[#0E0C15]">
+      <section 
+        ref={containerRef}
+        className="text-white pt-24 pb-16 px-8 lg:px-16" 
+        id="team"
+      >
         <motion.h2
-          className="text-center text-4xl lg:text-6xl md:text-5xl font-bold font-aclonica mb-16 lg:mt-7"
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0, transition: { duration: 1 } }}
-          viewport={{ once: false }}
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center text-5xl lg:text-7xl md:text-6xl font-bold font-aclonica mb-20 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400"
         >
           Meet the Team
         </motion.h2>
 
         {windowWidth < 768 ? (
-          <Swiper spaceBetween={15} slidesPerView={1}>
+          <Swiper
+            spaceBetween={24}
+            slidesPerView={1.2}
+            centeredSlides={true}
+            loop={true}
+            className="pb-12"
+          >
             {teamMembers.map((member, index) => (
               <SwiperSlide key={index}>
-                <TeamMemberCard member={member} index={index} />
+                <TeamMemberCard 
+                  member={member} 
+                  index={index}
+                  totalMembers={teamMembers.length}
+                />
               </SwiperSlide>
             ))}
           </Swiper>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
             {teamMembers.map((member, index) => (
-              <TeamMemberCard key={index} member={member} index={index} />
+              <TeamMemberCard 
+                key={index} 
+                member={member} 
+                index={index}
+                totalMembers={teamMembers.length}
+              />
             ))}
           </div>
         )}
       </section>
       <Countdown />
     </div>
-  );
-};
-
-const TeamMemberCard = ({ member, index }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { amount: 0.3, once: false });
-  const controls = useAnimation();
-
-  useEffect(() => {
-    if (isInView) {
-      controls.start({
-        opacity: 1,
-        x: 0,
-        transition: { duration: 0.8, delay: index * 0.1 },
-      });
-    } else {
-      controls.start({ opacity: 0, x: -100 });
-    }
-  }, [isInView, controls, index]);
-
-  return (
-    <motion.div
-      ref={ref}
-      animate={controls}
-      className="flex flex-col items-center"
-    >
-      <img
-        src={member.image}
-        alt={member.name}
-        className="w-32 h-32 rounded-full border-2 border-gray-500"
-      />
-      <motion.p
-        className="mt-3 text-lg font-semibold text-yellow-400"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-      >
-        {member.name.split("").map((letter, i) => (
-          <motion.span
-            key={i}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: i * 0.05 }}
-          >
-            {letter}
-          </motion.span>
-        ))}
-      </motion.p>
-      <motion.p
-        className="mt-1 text-sm text-gray-300"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
-      >
-        {member.post}
-      </motion.p>
-    </motion.div>
   );
 };
 

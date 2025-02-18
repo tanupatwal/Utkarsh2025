@@ -10,9 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.2",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^1.0.6",
     "framer-motion": "^12.4.3",
+    "gsap": "^3.12.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.4.0",
@@ -20,6 +22,7 @@
     "react-just-parallax": "^3.1.16",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^7.1.5",
+    "scrolltrigger": "^1.0.1",
     "swiper": "^11.2.4"
   },
   "devDependencies": {

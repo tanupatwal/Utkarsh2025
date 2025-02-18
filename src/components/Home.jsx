@@ -46,93 +46,103 @@ const Home = () => {
     margin: "-10% 0px",
   });
 
-  return (
-    <div className="relative w-full h-screen overflow-hidden">
-      <div>
-        <div className="absolute inset-0 bg-cover bg-no-repeat">
-          <div
-            style={{
-              backgroundImage: `url(${heroBackground})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-            className="absolute inset-0"
-          />
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <Gradient />
-            <BackgroundCircles />
-          </div>
+  // src/components/Home.jsx
+// Update the content section styling
+
+// src/components/Home.jsx
+// Update the main content container
+
+return (
+  <div className="relative w-full min-h-screen overflow-hidden">
+    {/* Background stays the same */}
+    <div>
+      <div className="absolute inset-0 bg-cover bg-no-repeat">
+        <div
+          style={{
+            backgroundImage: `url(${heroBackground})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+          className="absolute inset-0"
+        />
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <Gradient />
+          <BackgroundCircles />
         </div>
       </div>
+    </div>
 
-      <div
-        ref={sectionRef}
-        className="relative z-10 flex flex-col lg:flex-row items-center justify-center w-full px-6 lg:px-20 text-white h-full"
-      >
-        <div className="w-full lg:w-1/2 text-center lg:text-left flex flex-col justify-center">
-          <motion.h1
-            className="text-4xl font-bold font-aclonica lg:text-6xl pt-5 md:text-5xl"
-            initial="hidden"
-            whileInView="visible"
-            variants={welcomeVariants}
-            viewport={{ once: false, amount: 0.2 }}
-          >
-            Welcome to
-          </motion.h1>
+    {/* Main content - Updated positioning */}
+    <div
+      ref={sectionRef}
+      className="relative z-10 flex flex-col lg:flex-row items-center justify-center w-full min-h-screen px-8 lg:px-16 max-w-[1440px] mx-auto"
+    >
+      {/* Left content */}
+      <div className="w-full lg:w-1/2 flex flex-col justify-center lg:pr-12">
+        <motion.h1
+          className="text-4xl sm:text-5xl lg:text-7xl font-bold font-aclonica text-white"
+          initial="hidden"
+          whileInView="visible"
+          variants={welcomeVariants}
+          viewport={{ once: false, amount: 0.2 }}
+        >
+          Welcome to
+        </motion.h1>
 
-          <h1 className="text-4xl font-bold lg:text-6xl md:text-5xl font-tiltPrism">
-            <span className="inline-block relative">
-              {text.split("").map((char, index) => (
-                <motion.span
-                  key={index}
-                  custom={index}
-                  initial="hidden"
-                  whileInView="visible"
-                  variants={letterVariants}
-                  viewport={{ once: false, amount: 0.2 }}
-                  className="inline-block"
-                >
-                  {char === " " ? "\u00A0" : char}
-                </motion.span>
-              ))}
-              <motion.img
-                src={curve}
-                className="absolute top-full left-0 w-full xl:-mt-1"
-                width={625}
-                height={28}
-                alt="curve"
+        <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold font-tiltPrism text-white mt-4">
+          <span className="inline-block relative">
+            {text.split("").map((char, index) => (
+              <motion.span
+                key={index}
+                custom={index}
                 initial="hidden"
                 whileInView="visible"
-                variants={curveVariants}
+                variants={letterVariants}
                 viewport={{ once: false, amount: 0.2 }}
-              />
-            </span>
-          </h1>
+                className="inline-block"
+              >
+                {char === " " ? "\u00A0" : char}
+              </motion.span>
+            ))}
+            <motion.img
+              src={curve}
+              className="absolute top-full left-0 w-full xl:-mt-1"
+              width={625}
+              height={28}
+              alt="curve"
+              initial="hidden"
+              whileInView="visible"
+              variants={curveVariants}
+              viewport={{ once: false, amount: 0.2 }}
+            />
+          </span>
+        </h1>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            variants={contentVariants}
-            viewport={{ once: false, amount: 0.5 }}
-          >
-            <p className="mt-10 text-xl lg:text-2xl font-montserrat">
-              Future Technology: Innovating Today, Transforming Tomorrow
-            </p>
-          </motion.div>
-        </div>
-
-        <motion.div
-          className="w-full lg:w-1/2 flex justify-center mt-10 lg:flex"
+        <motion.p
+          className="text-xl lg:text-2xl text-white/90 font-montserrat mt-8"
           initial="hidden"
           whileInView="visible"
           variants={contentVariants}
           viewport={{ once: false, amount: 0.5 }}
         >
-          <ImageCarousel />
-        </motion.div>
+          Future Technology: Innovating Today, Transforming Tomorrow
+        </motion.p>
       </div>
+
+      {/* Right content */}
+      <motion.div
+        className="w-full lg:w-1/2 flex justify-center items-center mt-12 lg:mt-0"
+        initial="hidden"
+        whileInView="visible"
+        variants={contentVariants}
+        viewport={{ once: false, amount: 0.5 }}
+      >
+        <div className="relative w-full max-w-2xl">
+          <ImageCarousel />
+        </div>
+      </motion.div>
     </div>
-  );
-};
+  </div>
+)};
 
 export default Home;

@@ -174,3 +174,37 @@
   text-align: left;
   width: 100%;
 }
+
+.perspective-1000 {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+/* Add to src/index.css */
+.perspective-1000 {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.gsap-marker-scroller-start,
+.gsap-marker-scroller-end {
+  display: none;
+}
+
+/* Add to src/index.css */
+.carousel-root {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.carousel .control-dots {
+  bottom: 16px !important;
+}
+
+.carousel .control-dots .dot {
+  box-shadow: none !important;
+}

@@ -207,6 +207,8 @@ const events = [
   },
 ];
 
+
+
 const Schedule = () => {
   const [selectedDay, setSelectedDay] = useState(1);
   const [likedEvents, setLikedEvents] = useState({});
@@ -219,95 +221,118 @@ const Schedule = () => {
 
   return (
     <div
-      className="flex flex-col items-center min-h-screen px-8 lg:py-8 text-white w-full"
+      className="flex flex-col items-center min-h-screen px-8 lg:px-16 py-24 text-white w-full bg-gradient-to-b from-[#0E0C15] to-[#1a1a2e]"
       id="schedule"
     >
       <motion.h1
-        className="text-center text-4xl lg:text-6xl md:text-5xl font-bold font-aclonica mb-6 lg:mt-5"
+        className="text-5xl lg:text-7xl md:text-6xl font-bold font-aclonica mb-16 bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400"
         initial={{ opacity: 0, x: 50 }}
-        whileInView={{ opacity: 1, x: 0, transition: { duration: 1 } }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 1 }}
         viewport={{ once: false }}
       >
         Schedule
       </motion.h1>
 
-      <div className="mb-6">
+      <motion.div 
+        className="mb-12"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+      >
         <select
           onChange={(e) => setSelectedDay(Number(e.target.value))}
-          className="px-4 py-3 mt-7 mb-7 text-lg font-medium bg-gray-800 text-white border border-gray-600 rounded-md focus:outline-none"
+          className="px-8 py-4 text-xl font-medium bg-gray-800/80 text-white border-2 border-purple-500/30 rounded-xl focus:outline-none focus:border-purple-500 backdrop-blur-sm transition-all duration-300"
         >
           <option value="1">Day 1</option>
           <option value="2">Day 2</option>
           <option value="3">Day 3</option>
         </select>
-      </div>
+      </motion.div>
 
       {filteredEvents.length > 0 ? (
-        <div className="hidden sm:grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-6xl">
-          {filteredEvents.map((event) => (
+        <div className="hidden sm:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 w-full max-w-7xl">
+          {filteredEvents.map((event, index) => (
             <motion.div
               key={event.id}
-              className="relative bg-gray-800 rounded-lg p-6 border-4 border-transparent flex flex-col"
-              style={{
-                borderImage:
-                  "linear-gradient(to right, blue, magenta, red, purple) 1",
-                height: "450px",
-              }}
-              initial={{ opacity: 0, x: 100 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 2, ease: "easeOut" }}
+              className="relative bg-gray-800/40 backdrop-blur-sm rounded-xl p-6 border-2 border-purple-500/20 hover:border-purple-500/40 group transition-all duration-300"
+              style={{ height: "450px" }}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: false, amount: 0.2 }}
             >
-              <h2 className="text-xl font-semibold mb-2">{event.name}</h2>
+              <h2 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+                {event.name}
+              </h2>
 
               <button
                 onClick={() => toggleLike(event.id)}
-                className="absolute top-4 right-4"
+                className="absolute top-4 right-4 transform transition-transform duration-300 hover:scale-110"
               >
                 <HeartIcon
-                  className={`w-8 h-8 ${
+                  className={`w-8 h-8 transition-colors duration-300 ${
                     likedEvents[event.id]
                       ? "text-red-500 fill-current"
-                      : "text-white"
+                      : "text-white group-hover:text-red-400"
                   }`}
                 />
               </button>
 
-              <div className="flex-grow">
+              <div className="flex-grow h-64 mb-4 overflow-hidden rounded-lg">
                 <img
                   src={event.image}
                   alt={event.name}
-                  className="w-full h-full object-cover rounded-md"
+                  className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
 
-              <div className="flex justify-between items-center mt-4 text-sm text-gray-300">
-                <span className="text-left">⏰ {event.time}</span>
-                <span className="text-right">📍 {event.location}</span>
+              <div className="flex justify-between items-center text-base text-gray-300">
+                <div className="flex items-center space-x-2">
+                  <span className="text-purple-400">⏰</span>
+                  <span>{event.time}</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-purple-400">📍</span>
+                  <span>{event.location}</span>
+                </div>
               </div>
             </motion.div>
           ))}
         </div>
       ) : (
-        <p className="text-lg text-gray-300">
+        <motion.p 
+          className="text-xl text-gray-300"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+        >
           No events scheduled for this day.
-        </p>
+        </motion.p>
       )}
 
+      {/* Mobile Swiper */}
       {filteredEvents.length > 0 && (
         <div className="block sm:hidden w-full max-w-sm">
-          <Swiper spaceBetween={15} slidesPerView={1}>
-            {filteredEvents.map((event) => (
+          <Swiper 
+            spaceBetween={20} 
+            slidesPerView={1}
+            className="pb-12"
+          >
+            {filteredEvents.map((event, index) => (
               <SwiperSlide key={event.id}>
                 <motion.div
-                  className="relative bg-gray-800 rounded-lg p-6 border-4 border-transparent flex flex-col"
-                  style={{ height: "450px", minHeight: "450px" }}
-                  initial={{ opacity: 0, x: 100 }}
+                  className="relative bg-gray-800/40 backdrop-blur-sm rounded-xl p-6 border-2 border-purple-500/20"
+                  style={{ height: "450px" }}
+                  initial={{ opacity: 0, x: 50 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: false, amount: 0.2 }}
                 >
-                  <h2 className="text-xl font-semibold">{event.name}</h2>
+                  {/* Same content as desktop card */}
+                  <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+                    {event.name}
+                  </h2>
 
                   <button
                     onClick={() => toggleLike(event.id)}
@@ -322,17 +347,23 @@ const Schedule = () => {
                     />
                   </button>
 
-                  <div className="flex-grow">
+                  <div className="flex-grow mt-4">
                     <img
                       src={event.image}
                       alt={event.name}
-                      className="w-full h-80 object-cover rounded-md mt-5"
+                      className="w-full h-64 object-cover rounded-lg"
                     />
                   </div>
 
-                  <div className="flex justify-between items-center mt-4 text-sm text-gray-300">
-                    <span className="text-left">⏰ {event.time}</span>
-                    <span className="text-right">📍 {event.location}</span>
+                  <div className="flex justify-between items-center mt-4 text-base text-gray-300">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-purple-400">⏰</span>
+                      <span>{event.time}</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-purple-400">📍</span>
+                      <span>{event.location}</span>
+                    </div>
                   </div>
                 </motion.div>
               </SwiperSlide>
