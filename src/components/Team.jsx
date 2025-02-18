@@ -169,7 +169,7 @@ const teamMembers = [
     image: "/assets/team/class1.png",
   },
   {
-    name: "Rohit Bisht",
+    name: "Rohit",
     post: "AGS Classroom",
     image: "/assets/team/class2.png",
   },
