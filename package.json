@@ -1,7 +1,12 @@
 {
+
   "name": "utkarsh-2025",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Official website for Utkarsh 2025 - Delhi NCR's Premier Tech Fest",
+  "author": "ADGITM",
+  "license": "UNLICENSED",
+  
   "type": "module",
   "scripts": {
     "dev": "vite",
