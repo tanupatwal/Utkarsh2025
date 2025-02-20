@@ -25,10 +25,12 @@ const Footer = () => {
           <div className="flex items-center space-x-2">
             <span className="text-purple-400">📧</span>
             <a 
-              href="mailto:contact@adgitmdelhi.ac.in"
+              href="https://adgips.ac.in/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-sm sm:text-base text-blue-400 hover:text-blue-300 transition-colors duration-300 hover:underline"
             >
-              contact@adgitmdelhi.ac.in
+              https://adgips.ac.in/
             </a>
           </div>
         </motion.div>
